@@ -214,7 +214,7 @@ class ArchiveIntegrationTest extends AbstractIntegrationSpec {
         file('dest').assertHasDescendants('someDir/1.txt')
     }
 
-    def "allows user to provide a custom resource for the tarTree"() {
+    def "cannot provide custom resource for the tarTree"() {
         given:
         TestFile tar = file('tar-contents')
         tar.create {
@@ -238,14 +238,9 @@ class ArchiveIntegrationTest extends AbstractIntegrationSpec {
             }
 '''
         when:
-        executer.expectDocumentedDeprecationWarning(
-            "Creating a tarTree from a resource without a backing file has been deprecated. " +
-                "This will fail with an error in Gradle 8.0. Use a task or declare a dependency to create the tar file. " +
-                "Consult the upgrading guide for further information: https://docs.gradle.org/current/userguide/upgrading_version_7.html#tar_tree_no_backing_file"
-        )
-        run 'copy'
+        fails 'copy'
         then:
-        file('dest').assertHasDescendants('someDir/1.txt')
+        failureHasCause("Cannot create a tar tree from a resource that does not have a backing file")
     }
 
     def "handles bzip2 compressed tars"() {

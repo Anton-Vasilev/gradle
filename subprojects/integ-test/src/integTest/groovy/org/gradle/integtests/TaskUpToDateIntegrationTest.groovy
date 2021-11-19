@@ -452,34 +452,4 @@ class TaskUpToDateIntegrationTest extends AbstractIntegrationSpec {
         'zipTree'     | 'some.jar' | "ZIP '%s'"
         'tarTree'     | 'some.tar' | "TAR '%s'"
     }
-
-    def "cannot register tar tree of custom resource as an output"() {
-        buildFile << """
-            abstract class TaskWithInvalidOutput extends DefaultTask {
-                @TaskAction
-                void doStuff() {}
-
-                @OutputFiles
-                abstract ConfigurableFileCollection getInvalidOutput()
-            }
-
-            tasks.register("taskWithInvalidOutput", TaskWithInvalidOutput) {
-                invalidOutput.from(tarTree(new ReadableResource() {
-                    InputStream read() { new ByteArrayInputStream("Hello".bytes) }
-                    String displayName = "readable resource"
-                    URI URI = uri("https://test.com")
-                    String baseName = "base name"
-                }))
-            }
-        """
-        executer.expectDocumentedDeprecationWarning(
-            "Creating a tarTree from a resource without a backing file has been deprecated. " +
-                "This will fail with an error in Gradle 8.0. Use a task or declare a dependency to create the tar file. " +
-                "Consult the upgrading guide for further information: https://docs.gradle.org/current/userguide/upgrading_version_7.html#tar_tree_no_backing_file"
-        )
-
-        expect:
-        fails("taskWithInvalidOutput")
-        failure.assertHasCause("Only files and directories can be registered as outputs (was: TAR 'readable resource')")
-    }
 }
