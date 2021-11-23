@@ -75,6 +75,10 @@ class InstrumentedInputAccessListener(
     private
     val broadcast = listenerManager.getBroadcaster(UndeclaredBuildInputListener::class.java)
 
+    // Can be read by multiple threads
+    @Volatile
+    var externalProcessTrackingEnabled = true
+
     override fun systemPropertyQueried(key: String, value: Any?, consumer: String) {
         if (allowedProperties.contains(key) || Workarounds.canReadSystemProperty(consumer)) {
             return
@@ -90,6 +94,9 @@ class InstrumentedInputAccessListener(
     }
 
     override fun externalProcessStarted(command: String, consumer: String?) {
+        if (!externalProcessTrackingEnabled) {
+            return
+        }
         // Starting external process is always an error because the configuration cache cannot fingerprint it in general.
         val message = StructuredMessage.build {
             text("external process started ")

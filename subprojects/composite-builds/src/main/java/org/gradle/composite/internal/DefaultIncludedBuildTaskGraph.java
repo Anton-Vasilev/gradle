@@ -23,6 +23,7 @@ import org.gradle.internal.build.BuildStateRegistry;
 import org.gradle.internal.build.ExecutionResult;
 import org.gradle.internal.build.ExportedTaskNode;
 import org.gradle.internal.buildtree.BuildTreeWorkGraph;
+import org.gradle.internal.buildtree.BuildTreeWorkGraphDecorator;
 import org.gradle.internal.concurrent.CompositeStoppable;
 import org.gradle.internal.concurrent.ExecutorFactory;
 import org.gradle.internal.concurrent.ManagedExecutor;
@@ -47,6 +48,7 @@ public class DefaultIncludedBuildTaskGraph implements BuildTreeWorkGraphControll
     private final BuildOperationExecutor buildOperationExecutor;
     private final BuildStateRegistry buildRegistry;
     private final WorkerLeaseService workerLeaseService;
+    private final BuildTreeWorkGraphDecorator graphDecorator;
     private final ManagedExecutor executorService;
     private final ThreadLocal<DefaultBuildTreeWorkGraph> current = new ThreadLocal<>();
 
@@ -54,12 +56,14 @@ public class DefaultIncludedBuildTaskGraph implements BuildTreeWorkGraphControll
         ExecutorFactory executorFactory,
         BuildOperationExecutor buildOperationExecutor,
         BuildStateRegistry buildRegistry,
-        WorkerLeaseService workerLeaseService
+        WorkerLeaseService workerLeaseService,
+        BuildTreeWorkGraphDecorator graphDecorator
     ) {
         this.buildOperationExecutor = buildOperationExecutor;
         this.buildRegistry = buildRegistry;
         this.executorService = executorFactory.create("included builds");
         this.workerLeaseService = workerLeaseService;
+        this.graphDecorator = graphDecorator;
     }
 
     private DefaultBuildControllers createControllers() {
@@ -73,7 +77,7 @@ public class DefaultIncludedBuildTaskGraph implements BuildTreeWorkGraphControll
         current.set(workGraph);
         try {
             try {
-                return action.apply(workGraph);
+                return action.apply(graphDecorator.decorateWorkGraph(workGraph));
             } finally {
                 workGraph.close();
             }

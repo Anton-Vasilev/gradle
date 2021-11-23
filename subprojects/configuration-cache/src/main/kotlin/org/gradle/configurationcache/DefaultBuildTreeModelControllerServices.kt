@@ -26,6 +26,7 @@ import org.gradle.configurationcache.problems.ConfigurationCacheProblems
 import org.gradle.internal.buildtree.BuildActionModelRequirements
 import org.gradle.internal.buildtree.BuildModelParameters
 import org.gradle.internal.buildtree.BuildTreeModelControllerServices
+import org.gradle.internal.buildtree.DefaultBuildTreeWorkGraphDecorator
 import org.gradle.internal.buildtree.RunTasksRequirements
 import org.gradle.internal.service.ServiceRegistration
 import org.gradle.util.internal.IncubationLogger
@@ -92,9 +93,12 @@ class DefaultBuildTreeModelControllerServices : BuildTreeModelControllerServices
             registration.add(ConfigurationCacheInjectedClasspathInstrumentationStrategy::class.java)
             registration.add(ConfigurationCacheProblems::class.java)
             registration.add(DefaultConfigurationCache::class.java)
+            registration.add(InstrumentedInputAccessListener::class.java)
+            registration.add(ConfigurationCacheAwareBuildTreeWorkGraphDecorator::class.java)
         } else {
             registration.add(VintageInjectedClasspathInstrumentationStrategy::class.java)
             registration.add(VintageBuildTreeLifecycleControllerFactory::class.java)
+            registration.add(DefaultBuildTreeWorkGraphDecorator::class.java)
         }
     }
 }
