@@ -21,6 +21,7 @@ import org.gradle.internal.buildtree.BuildTreeWorkGraph
 import org.gradle.internal.buildtree.BuildTreeWorkGraphDecorator
 import java.util.function.Consumer
 
+
 class ConfigurationCacheAwareBuildTreeWorkGraphDecorator(
     private val inputAccessListener: InstrumentedInputAccessListener
 ) : BuildTreeWorkGraphDecorator {
@@ -29,7 +30,8 @@ class ConfigurationCacheAwareBuildTreeWorkGraphDecorator(
     }
 
 
-    private inner class ListeningWorkGraph(private val delegate: BuildTreeWorkGraph) : BuildTreeWorkGraph {
+    private
+    inner class ListeningWorkGraph(private val delegate: BuildTreeWorkGraph) : BuildTreeWorkGraph {
         override fun scheduleWork(action: Consumer<in BuildTreeWorkGraph.Builder>?) {
             delegate.scheduleWork(action)
         }

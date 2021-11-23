@@ -73,7 +73,8 @@ class DefaultConfigurationCacheProblemsListener internal constructor(
                 StructuredMessage.build {
                     text("external process started")
                     reference(command)
-                })
+                }
+            )
         )
     }
 

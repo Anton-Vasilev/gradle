@@ -20,7 +20,6 @@ import org.gradle.api.internal.ExternalProcessStartedListener;
 import org.gradle.api.internal.ProcessOperations;
 import org.gradle.api.internal.file.FileCollectionFactory;
 import org.gradle.api.internal.file.FileResolver;
-import org.gradle.api.internal.provider.ConfigurationTimeBarrier;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.initialization.BuildCancellationToken;
 import org.gradle.internal.jvm.JavaModuleDetector;
