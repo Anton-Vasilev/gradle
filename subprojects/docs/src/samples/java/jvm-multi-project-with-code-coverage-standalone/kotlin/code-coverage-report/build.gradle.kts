@@ -13,7 +13,7 @@ dependencies {
 
 reporting {
     reports {
-        val testCodeCoverageReport by registering(JacocoCoverageReport::class) {
+        val testCodeCoverageReport by creating(JacocoCoverageReport::class) {
             testType.set(TestType.UNIT_TESTS)
         }
     }
