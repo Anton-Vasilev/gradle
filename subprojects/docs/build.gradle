@@ -365,8 +365,8 @@ samples {
         }
         jvmMultiProjectWithCodeCoverageDistribution {
             sampleDirectory = samplesRoot.dir("java/jvm-multi-project-with-code-coverage-distribution")
-            displayName = "Aggregating code coverage with JaCoCo"
-            description = "Report code coverage on a multi-module project using link:https://www.jacoco.org/jacoco/[JaCoCo]."
+            displayName = "Aggregating code coverage with JaCoCo from an application/distribution"
+            description = "Report code coverage on the application/distribution of a multi-module project using link:https://www.jacoco.org/jacoco/[JaCoCo]."
             category = "Java"
             common {
                 from(templates.javaApplicationAsSubproject)

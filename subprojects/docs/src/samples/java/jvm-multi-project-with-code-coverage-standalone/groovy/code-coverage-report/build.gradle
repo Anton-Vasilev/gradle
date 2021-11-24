@@ -8,18 +8,18 @@ repositories {
 }
 
 dependencies {
-    jacocoAggregation project(':application')
+    jacocoAggregation project(':application') // <1>
 }
 
 reporting {
     reports {
-        testCodeCoverageReport(JacocoCoverageReport) {
+        testCodeCoverageReport(JacocoCoverageReport) { // <2>
             testType = TestType.UNIT_TESTS
         }
     }
 }
 
-// Make JaCoCo aggregate report generation part of the 'check' lifecycle phase
+// Optional: make JaCoCo aggregate report generation part of the 'check' lifecycle phase
 tasks.named("check") {
     dependsOn tasks.named('testCodeCoverageReport', JacocoReport)
 }
