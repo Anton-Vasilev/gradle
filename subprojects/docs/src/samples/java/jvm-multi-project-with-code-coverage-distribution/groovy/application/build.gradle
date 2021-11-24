@@ -1,0 +1,19 @@
+plugins {
+    id 'myproject.java-conventions'
+    id 'application'
+    id 'jacoco-report-aggregation'
+}
+
+dependencies {
+    implementation project(':list')
+    implementation project(':utilities')
+}
+
+application {
+    mainClass = 'org.gradle.sample.Main'
+}
+
+// Make JaCoCo aggregate report generation part of the 'check' lifecycle phase
+tasks.named('check') {
+    dependsOn tasks.named('testCodeCoverageReport', JacocoReport)
+}
