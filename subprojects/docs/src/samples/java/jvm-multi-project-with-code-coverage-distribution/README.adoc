@@ -9,7 +9,7 @@ include::sample[dir="groovy",files="application/build.gradle[]"]
 include::sample[dir="kotlin",files="application/build.gradle.kts[]"]
 ====
 
-The standalone project applies `jacoco-report-aggregation`, and requires no additional configuration if the `jvm-test-suite` plugin is present.
+The `application` project requires no additional configuration if the `jvm-test-suite` plugin is present.
 
 <1> Apply the `jacoco-report-aggregation` plugin
 
