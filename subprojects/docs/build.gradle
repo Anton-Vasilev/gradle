@@ -391,6 +391,34 @@ samples {
                 from(templates.javaJunit5TestForUtilitiesLibrary)
             }
         }
+        jvmMultiProjectWithTestAggregationDistribution {
+            sampleDirectory = samplesRoot.dir("java/jvm-multi-project-with-test-aggregation-distribution")
+            displayName = "Aggregating test results of an application/distribution"
+            description = "Report all test results using the application/distribution of a multi-module project."
+            category = "Java"
+            common {
+                from(templates.javaApplicationAsSubproject)
+                from(templates.javaListLibraryAsSubproject)
+                from(templates.javaUtilitiesLibraryAsSubproject)
+                from(templates.javaJunit5TestForApplication)
+                from(templates.javaJunit5TestForListLibrary)
+                from(templates.javaJunit5TestForUtilitiesLibrary)
+            }
+        }
+        jvmMultiProjectWithTestAggregationStandalone {
+            sampleDirectory = samplesRoot.dir("java/jvm-multi-project-with-test-aggregation-standalone")
+            displayName = "Aggregating test results using a standalone utility project"
+            description = "Report all test results using a standalone utility project as part of a multi-module project."
+            category = "Java"
+            common {
+                from(templates.javaApplicationAsSubproject)
+                from(templates.javaListLibraryAsSubproject)
+                from(templates.javaUtilitiesLibraryAsSubproject)
+                from(templates.javaJunit5TestForApplication)
+                from(templates.javaJunit5TestForListLibrary)
+                from(templates.javaJunit5TestForUtilitiesLibrary)
+            }
+        }
         publishingJavaLibraries {
             sampleDirectory = samplesRoot.dir("java/library-publishing")
             description = "Publish a Java library to a binary repository."

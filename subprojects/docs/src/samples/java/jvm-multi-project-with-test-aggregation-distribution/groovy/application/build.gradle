@@ -1,0 +1,19 @@
+plugins {
+    id 'myproject.java-conventions'
+    id 'application'
+    id 'test-report-aggregation' // <1>
+}
+
+dependencies {
+    implementation project(':list')
+    implementation project(':utilities')
+}
+
+application {
+    mainClass = 'org.gradle.sample.Main'
+}
+
+// Optional: make aggregate test report generation part of the 'check' lifecycle phase
+tasks.named('check') {
+    dependsOn tasks.named('testAggregateTestReport', TestReport)
+}
