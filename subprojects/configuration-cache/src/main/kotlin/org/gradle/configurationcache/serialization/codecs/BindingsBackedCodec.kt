@@ -103,15 +103,15 @@ typealias Decoding = DecodingProvider<Any>
 
 
 internal
-class Bindings private constructor(
+class Bindings(
     private val bindings: List<Binding>
 ) {
     internal
     companion object {
-        fun of(builder: BindingsBuilder.() -> Unit) = Bindings(BindingsBuilder(emptyList()).apply(builder).bindings)
+        fun of(builder: BindingsBuilder.() -> Unit) = BindingsBuilder(emptyList()).apply(builder).build()
     }
 
-    fun append(builder: BindingsBuilder.() -> Unit) = Bindings(BindingsBuilder(bindings).apply(builder).bindings)
+    fun append(builder: BindingsBuilder.() -> Unit) = BindingsBuilder(bindings).apply(builder).build()
 
     fun build() = BindingsBackedCodec(bindings.toList())
 }
@@ -119,8 +119,10 @@ class Bindings private constructor(
 
 internal
 class BindingsBuilder(initialBindings: List<Binding>) {
-
+    private
     val bindings = initialBindings.toMutableList()
+
+    fun build() = Bindings(bindings.toList())
 
     inline fun <reified T> bind(codec: Codec<T>) =
         bind(T::class.java, codec)
