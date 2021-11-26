@@ -61,7 +61,7 @@ class FixedValueReplacingProviderCodec(
     buildStateRegistry: BuildStateRegistry
 ) {
     private
-    val providerWithChangingValueCodec = BindingsBuilder.of {
+    val providerWithChangingValueCodec = Bindings.of {
         bind(ValueSourceProviderCodec(valueSourceProviderFactory))
         bind(BuildServiceProviderCodec(buildStateRegistry))
         bind(BeanCodec())

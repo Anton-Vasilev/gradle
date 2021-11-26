@@ -110,7 +110,7 @@ class Codecs(
     documentationRegistry: DocumentationRegistry,
 ) {
     private
-    val userTypesBindings = BindingsBuilder.of {
+    val userTypesBindings = Bindings.of {
 
         unsupportedTypes()
 
@@ -199,7 +199,7 @@ class Codecs(
     }.build()
 
     private
-    val internalTypesBindings = BindingsBuilder.of {
+    val internalTypesBindings = Bindings.of {
         baseTypes()
 
         providerTypes(propertyFactory, filePropertyFactory, valueSourceProviderFactory, buildStateRegistry)
